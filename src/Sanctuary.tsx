@@ -5,35 +5,22 @@ const Sanctuary = () => {
     <section id="sanctuary" className="bg-[#0B0B0B] text-white py-24 px-8 overflow-hidden">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16">
         
-        {/* Text Content */}
         <div className="flex-1 space-y-8">
           <h2 className="text-[#8B4513] text-xs uppercase tracking-[0.4em]">The Sanctuary</h2>
-          <h3 className="text-4xl md:text-5xl font-light leading-tight">
+          <h3 className="text-4xl font-light leading-tight tracking-tight">
             A Restorative Escape From City Noise.
           </h3>
-          <p className="text-white/60 font-serif italic text-lg leading-relaxed">
-            Morla is defined by the sensory signature of Sandalwood, Bergamot, and Black Pepper. 
-            It is a space designed for the discerning patron to pause, refine, and proceed.
+          <p className="text-white/50 font-serif italic text-lg leading-relaxed">
+            Defined by the sensory signature of Sandalwood and Bergamot. A space designed to pause, refine, and proceed.
           </p>
-          <div className="grid grid-cols-2 gap-8 pt-4">
-            <div>
-              <span className="block text-[#8B4513] text-xl mb-1">Aged Cognac</span>
-              <span className="text-[10px] uppercase tracking-widest text-white/30">Leather Seating</span>
-            </div>
-            <div>
-              <span className="block text-[#8B4513] text-xl mb-1">Obsidian</span>
-              <span className="text-[10px] uppercase tracking-widest text-white/30">Minimalist Canvas</span>
-            </div>
-          </div>
         </div>
 
-        {/* Branding Visual */}
-        <div className="flex-1 flex justify-center items-center relative">
-          <div className="absolute inset-0 bg-[#8B4513]/5 blur-3xl rounded-full"></div>
+        {/* The Monogram Visual - Blended Fix */}
+        <div className="flex-1 flex justify-center items-center">
           <img 
             src="/favicon.svg" 
             alt="Morla Monogram" 
-            className="w-64 h-64 relative z-10 opacity-80" 
+            className="w-48 h-auto opacity-40 mix-blend-screen grayscale brightness-150" 
           />
         </div>
       </div>
