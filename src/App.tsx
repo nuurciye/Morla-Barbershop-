@@ -1,37 +1,15 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
+import Hero from './Hero';
 
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import { AnimatePresence } from 'motion/react';
-import Layout from './components/Layout';
-import Home from './pages/Home';
-import Ritual from './pages/Ritual';
-import Sanctuary from './pages/Sanctuary';
-import Reserve from './pages/Reserve';
-
-function AnimatedRoutes() {
-  const location = useLocation();
-  
+function App() {
   return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="ritual" element={<Ritual />} />
-          <Route path="sanctuary" element={<Sanctuary />} />
-          <Route path="reserve" element={<Reserve />} />
-        </Route>
-      </Routes>
-    </AnimatePresence>
+    <main className="bg-[#0B0B0B] min-h-screen">
+      {/* This displays the Hero component we just created */}
+      <Hero />
+      
+      {/* You can add your other sections here later */}
+    </main>
   );
 }
 
-export default function App() {
-  return (
-    <BrowserRouter>
-      <AnimatedRoutes />
-    </BrowserRouter>
-  );
-}
+export default App;
+
