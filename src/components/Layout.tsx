@@ -159,3 +159,4 @@ export default function Layout() {
     </div>
   );
 }
+// Force UI refresh for GitHub sync
