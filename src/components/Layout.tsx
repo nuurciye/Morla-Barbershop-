@@ -109,18 +109,18 @@ export default function Layout() {
           <div>
             <h4 className="text-xs uppercase tracking-widest font-semibold text-brass mb-6">Contact</h4>
             <ul className="space-y-4 text-sm text-canvas/80">
-              <li>123 Artisan Way, Suite 100</li>
-              <li>Cityville, ST 12345</li>
-              <li>hello@morla.com</li>
-              <li>(555) 123-4567</li>
+              <li>Digfeer street</li>
+              <li>Mogadishu, Somalia</li>
+              <li>morlacompanyy@gmail.com</li>
+              <li>+252610488807</li>
             </ul>
           </div>
         </div>
         <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-canvas/10 text-xs text-canvas/40 flex flex-col md:flex-row justify-between items-center">
           <p>&copy; {new Date().getFullYear()} Morla Barbershop. All rights reserved.</p>
           <div className="flex gap-4 mt-4 md:mt-0">
-            <a href="#" className="hover:text-canvas transition-colors">Instagram</a>
-            <a href="#" className="hover:text-canvas transition-colors">Twitter</a>
+            <a href="https://www.instagram.com/morla.so?igsh=MTVocW94dmp0MnhlbA==" target="_blank" rel="noopener noreferrer" className="hover:text-canvas transition-colors">Instagram</a>
+            <a href="https://www.tiktok.com/@morla.so?_r=1&_t=ZN-94j81v22938" target="_blank" rel="noopener noreferrer" className="hover:text-canvas transition-colors">TikTok</a>
           </div>
         </div>
       </footer>

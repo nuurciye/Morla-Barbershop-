@@ -15,7 +15,7 @@ export default function Ritual() {
       <section className="relative h-[70vh] flex items-center justify-center overflow-hidden bg-obsidian text-canvas">
         <div className="absolute inset-0 z-0 opacity-30">
           <img
-            src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&q=80&w=2940"
+            src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&q=80&w=2944"
             alt="Barber tools"
             className="w-full h-full object-cover grayscale"
             referrerPolicy="no-referrer"
@@ -159,8 +159,8 @@ export default function Ritual() {
           </div>
           <div className="relative h-[600px] rounded-sm overflow-hidden">
             <img
-              src="https://images.unsplash.com/photo-1521590832167-7bfc17484d20?auto=format&fit=crop&q=80&w=2940"
-              alt="Barber pouring drink"
+              src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&q=80&w=2940"
+              alt="Premium barbershop experience"
               className="w-full h-full object-cover grayscale"
               referrerPolicy="no-referrer"
             />

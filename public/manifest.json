@@ -8,13 +8,13 @@
   "theme_color": "#0a0a0a",
   "icons": [
     {
-      "src": "/icon-192.png",
+      "src": "https://storage.googleapis.com/aistudio-ext-prod-uploads-18024693261/1742080668631-image.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     },
     {
-      "src": "/icon-512.png",
+      "src": "https://storage.googleapis.com/aistudio-ext-prod-uploads-18024693261/1742080668631-image.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"

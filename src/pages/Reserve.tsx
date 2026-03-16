@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { MapPin, Clock, Phone, Mail, CheckCircle2 } from 'lucide-react';
 import { useState } from 'react';
+import Calendar from '../components/Calendar';
 
 export default function Reserve() {
   const [step, setStep] = useState(1);
@@ -19,9 +20,47 @@ export default function Reserve() {
 
   const times = ['10:00 AM', '11:00 AM', '1:00 PM', '2:30 PM', '4:00 PM', '5:30 PM'];
 
-  const handleConfirm = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleConfirm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setShowModal(true);
+    setIsSubmitting(true);
+    setError('');
+
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const phone = formData.get('phone');
+
+    try {
+      const response = await fetch('/api/reserve', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          service: selectedService.split(' - ')[0],
+          date: selectedDate,
+          time: selectedTime,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to confirm reservation');
+      }
+
+      setShowModal(true);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -120,10 +159,9 @@ export default function Reserve() {
               </div>
               {step === 2 ? (
                 <div className="space-y-6">
-                  <input 
-                    type="date" 
-                    className="w-full px-6 py-4 border border-obsidian/20 focus:border-obsidian outline-none bg-transparent"
-                    onChange={(e) => setSelectedDate(e.target.value)}
+                  <Calendar 
+                    selectedDate={selectedDate} 
+                    onSelectDate={(date) => setSelectedDate(date)} 
                   />
                   {selectedDate && (
                     <div className="grid grid-cols-3 gap-3">
@@ -157,18 +195,44 @@ export default function Reserve() {
             <div className={step < 3 ? 'opacity-40 pointer-events-none' : ''}>
               <h2 className="text-sm uppercase tracking-widest font-semibold text-cognac mb-4">3. Your Details</h2>
               {step === 3 && (
-                <form className="space-y-4" onSubmit={handleConfirm}>
-                  <input type="text" placeholder="Full Name" required className="w-full px-6 py-4 border border-obsidian/20 focus:border-obsidian outline-none bg-transparent" />
-                  <input type="email" placeholder="Email Address" required className="w-full px-6 py-4 border border-obsidian/20 focus:border-obsidian outline-none bg-transparent" />
-                  <input type="tel" placeholder="Phone Number" required className="w-full px-6 py-4 border border-obsidian/20 focus:border-obsidian outline-none bg-transparent" />
-                  
-                  <button
-                    type="submit"
-                    className="w-full mt-8 px-8 py-5 bg-obsidian text-canvas text-sm uppercase tracking-widest font-semibold hover:bg-cognac transition-all duration-300"
-                  >
-                    Confirm Reservation
-                  </button>
-                </form>
+                <div className="space-y-6">
+                  <div className="p-6 border border-obsidian/10 bg-stone/30 text-obsidian/80 space-y-3">
+                    <h3 className="text-xs uppercase tracking-widest font-semibold text-obsidian mb-2">Reservation Summary</h3>
+                    <div className="flex justify-between text-sm">
+                      <span className="font-medium">Service</span>
+                      <span>{selectedService.split(' - ')[0]}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="font-medium">Price</span>
+                      <span>{selectedService.split(' - ')[1]}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="font-medium">Date</span>
+                      <span>{selectedDate}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="font-medium">Time</span>
+                      <span>{selectedTime}</span>
+                    </div>
+                  </div>
+                  <form className="space-y-4" onSubmit={handleConfirm}>
+                    <input type="text" name="name" placeholder="Full Name" required className="w-full px-6 py-4 border border-obsidian/20 focus:border-obsidian outline-none bg-transparent" />
+                    <input type="email" name="email" placeholder="Email Address" required className="w-full px-6 py-4 border border-obsidian/20 focus:border-obsidian outline-none bg-transparent" />
+                    <input type="tel" name="phone" placeholder="Phone Number" required className="w-full px-6 py-4 border border-obsidian/20 focus:border-obsidian outline-none bg-transparent" />
+                    
+                    {error && (
+                      <div className="text-red-500 text-sm">{error}</div>
+                    )}
+
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full mt-8 px-8 py-5 bg-obsidian text-canvas text-sm uppercase tracking-widest font-semibold hover:bg-cognac transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {isSubmitting ? 'Confirming...' : 'Confirm Reservation'}
+                    </button>
+                  </form>
+                </div>
               )}
             </div>
           </div>
@@ -189,7 +253,7 @@ export default function Reserve() {
               </div>
               <div className="flex items-start gap-4">
                 <Phone className="w-6 h-6 text-brass shrink-0" />
-                <p>(+2526) 1048-8807</p>
+                <p>+252610488807</p>
               </div>
               <div className="flex items-start gap-4">
                 <Mail className="w-6 h-6 text-brass shrink-0" />
@@ -205,7 +269,7 @@ export default function Reserve() {
                 <Clock className="w-6 h-6 text-brass shrink-0" />
                 <div className="w-full max-w-xs">
                   <div className="flex justify-between border-b border-obsidian/10 pb-2 mb-2">
-                    <span>Tuesday - Friday</span>
+                    <span>Monday - Friday</span>
                     <span>10:00 AM - 7:00 PM</span>
                   </div>
                   <div className="flex justify-between border-b border-obsidian/10 pb-2 mb-2">
@@ -213,7 +277,7 @@ export default function Reserve() {
                     <span>9:00 AM - 5:00 PM</span>
                   </div>
                   <div className="flex justify-between text-obsidian/50">
-                    <span>Sunday - Monday</span>
+                    <span>Sunday</span>
                     <span>Closed</span>
                   </div>
                 </div>
