@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 interface CalendarProps {
   selectedDate: string;
@@ -7,6 +8,7 @@ interface CalendarProps {
 }
 
 export default function Calendar({ selectedDate, onSelectDate }: CalendarProps) {
+  const { t } = useLanguage();
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
   const daysInMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0).getDate();
@@ -60,9 +62,8 @@ export default function Calendar({ selectedDate, onSelectDate }: CalendarProps) 
     );
   }
 
-  const monthNames = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
-  ];
+  const monthNames = t.calendar.months;
+  const dayNames = t.calendar.days;
 
   return (
     <div className="w-full border border-obsidian/20 p-6 bg-transparent">
@@ -78,7 +79,7 @@ export default function Calendar({ selectedDate, onSelectDate }: CalendarProps) 
         </button>
       </div>
       <div className="grid grid-cols-7 gap-1 text-center mb-4">
-        {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map(day => (
+        {dayNames.map(day => (
           <div key={day} className="text-xs font-semibold text-obsidian/50 uppercase tracking-wider">
             {day}
           </div>

@@ -94,9 +94,10 @@ async function startServer() {
       const resend = new Resend(resendApiKey);
       
       // Use the verified domain for the from address to avoid validation errors
-      const emailFrom = process.env.EMAIL_FROM || "admin@untierinev.resend.app";
+      // Resend's default testing from address is onboarding@resend.dev
+      const emailFrom = process.env.EMAIL_FROM || "onboarding@resend.dev";
       
-      let adminEmailEnv = process.env.ADMIN_EMAIL || "admin@untierinev.resend.app";
+      let adminEmailEnv = process.env.ADMIN_EMAIL || "nuurciye@gmail.com";
       // Sanitize the email in case it was entered literally as "<anything>@..."
       adminEmailEnv = adminEmailEnv.replace(/<anything>/g, 'admin');
       
@@ -107,7 +108,7 @@ async function startServer() {
 
       if (adminEmails.length === 0) {
         console.warn("ADMIN_EMAIL is invalid. Falling back to default.");
-        adminEmails.push("admin@untierinev.resend.app");
+        adminEmails.push("nuurciye@gmail.com");
       }
 
       // Send email to customer
@@ -131,7 +132,7 @@ async function startServer() {
               <strong>Morla Barbershop</strong><br>
               Digfeer street<br>
               Mogadishu, Somalia<br>
-              +252610488807
+              +252612301508
             </p>
           </div>
         `,
@@ -161,15 +162,18 @@ async function startServer() {
       const [customerResult, adminResult] = await Promise.all([customerEmailPromise, adminEmailPromise]);
 
       if (customerResult.error) {
-        throw new Error(customerResult.error.message);
+        console.error("Failed to send customer notification:", customerResult.error);
+        // We don't throw here because in testing mode, Resend only allows sending to the verified email.
+        // The reservation is still successful.
       }
       
       if (adminResult.error) {
         console.error("Failed to send admin notification:", adminResult.error);
-        // We don't throw here so the customer still sees a success message if their email worked
+        // We don't throw here so the customer still sees a success message
       }
 
-      res.json({ success: true, data: customerResult.data });
+      // Return success even if emails failed, so the UI can show the confirmation screen
+      res.json({ success: true, data: customerResult.data || adminResult.data });
     } catch (error: any) {
       console.error("Error sending email:", error);
       res.status(500).json({ error: error.message || "Failed to send email" });

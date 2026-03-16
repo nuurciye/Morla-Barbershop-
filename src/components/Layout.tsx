@@ -1,21 +1,24 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Globe } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Layout() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { language, setLanguage, t } = useLanguage();
 
   useEffect(() => {
     setIsMenuOpen(false);
   }, [location.pathname]);
 
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'The Ritual', path: '/ritual' },
-    { name: 'The Sanctuary', path: '/sanctuary' },
-    { name: 'Reserve', path: '/reserve' },
+    { name: t.nav.home, path: '/' },
+    { name: t.nav.ritual, path: '/ritual' },
+    { name: t.nav.sanctuary, path: '/sanctuary' },
+    { name: t.nav.gallery, path: '/gallery' },
+    { name: t.nav.reserve, path: '/reserve' },
   ];
 
   return (
@@ -29,7 +32,7 @@ export default function Layout() {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
+            {navLinks.filter(link => link.name !== t.nav.reserve).map((link) => (
               <Link
                 key={link.name}
                 to={link.path}
@@ -44,17 +47,32 @@ export default function Layout() {
               to="/reserve"
               className="px-6 py-2.5 bg-obsidian text-canvas text-xs uppercase tracking-widest font-semibold hover:bg-cognac transition-colors"
             >
-              Reserve
+              {t.nav.reserve}
             </Link>
+            <button
+              onClick={() => setLanguage(language === 'en' ? 'so' : 'en')}
+              className="flex items-center gap-2 text-sm uppercase tracking-widest font-medium text-obsidian/70 hover:text-cognac transition-colors"
+            >
+              <Globe size={16} />
+              {language === 'en' ? 'SO' : 'EN'}
+            </button>
           </div>
 
           {/* Mobile Toggle */}
-          <button
-            className="md:hidden p-2 text-obsidian"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          <div className="md:hidden flex items-center gap-4">
+            <button
+              onClick={() => setLanguage(language === 'en' ? 'so' : 'en')}
+              className="text-sm uppercase tracking-widest font-medium text-obsidian/70"
+            >
+              {language === 'en' ? 'SO' : 'EN'}
+            </button>
+            <button
+              className="p-2 text-obsidian"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
       </nav>
 
@@ -91,11 +109,11 @@ export default function Layout() {
           <div>
             <h3 className="text-2xl font-bold tracking-tighter uppercase mb-6">Morla</h3>
             <p className="text-canvas/60 text-sm max-w-xs">
-              Precision Crafted. Timeless Style. The Ritual of Self-Respect.
+              {t.footer.tagline}
             </p>
           </div>
           <div>
-            <h4 className="text-xs uppercase tracking-widest font-semibold text-brass mb-6">Explore</h4>
+            <h4 className="text-xs uppercase tracking-widest font-semibold text-brass mb-6">{t.footer.explore}</h4>
             <ul className="space-y-4">
               {navLinks.map((link) => (
                 <li key={link.name}>
@@ -107,17 +125,28 @@ export default function Layout() {
             </ul>
           </div>
           <div>
-            <h4 className="text-xs uppercase tracking-widest font-semibold text-brass mb-6">Contact</h4>
+            <h4 className="text-xs uppercase tracking-widest font-semibold text-brass mb-6">{t.footer.contact}</h4>
             <ul className="space-y-4 text-sm text-canvas/80">
-              <li>Digfeer street</li>
-              <li>Mogadishu, Somalia</li>
-              <li>morlacompanyy@gmail.com</li>
-              <li>+252610488807</li>
+              <li>
+                <a href="https://maps.google.com/?q=Digfeer+street,+Mogadishu,+Somalia" target="_blank" rel="noopener noreferrer" className="hover:text-canvas transition-colors">
+                  Digfeer street<br />Mogadishu, Somalia
+                </a>
+              </li>
+              <li>
+                <a href="mailto:morlacompanyy@gmail.com" className="hover:text-canvas transition-colors">
+                  morlacompanyy@gmail.com
+                </a>
+              </li>
+              <li>
+                <a href="tel:+252612301508" className="hover:text-canvas transition-colors">
+                  +252612301508
+                </a>
+              </li>
             </ul>
           </div>
         </div>
         <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-canvas/10 text-xs text-canvas/40 flex flex-col md:flex-row justify-between items-center">
-          <p>&copy; {new Date().getFullYear()} Morla Barbershop. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} {t.footer.rights}</p>
           <div className="flex gap-4 mt-4 md:mt-0">
             <a href="https://www.instagram.com/morla.so?igsh=MTVocW94dmp0MnhlbA==" target="_blank" rel="noopener noreferrer" className="hover:text-canvas transition-colors">Instagram</a>
             <a href="https://www.tiktok.com/@morla.so?_r=1&_t=ZN-94j81v22938" target="_blank" rel="noopener noreferrer" className="hover:text-canvas transition-colors">TikTok</a>

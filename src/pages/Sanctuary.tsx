@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Wind, Flame, Droplets } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Sanctuary() {
+  const { t } = useLanguage();
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -31,11 +34,11 @@ export default function Sanctuary() {
             transition={{ delay: 0.2, duration: 0.8 }}
           >
             <h1 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase mb-6 leading-tight">
-              A Restorative Sanctuary<br />
-              <span className="text-brass font-light italic">Away From City Noise.</span>
+              {t.sanctuary.heroTitle1}<br />
+              <span className="text-brass font-light italic">{t.sanctuary.heroTitle2}</span>
             </h1>
             <p className="text-lg md:text-xl text-canvas/70 font-light tracking-wide mb-12">
-              Aged Cognac leather, brushed brass, and obsidian canvas.
+              {t.sanctuary.heroSubtitle}
             </p>
           </motion.div>
         </div>
@@ -55,30 +58,30 @@ export default function Sanctuary() {
           </div>
           
           <div className="order-1 lg:order-2">
-            <h2 className="text-sm uppercase tracking-widest font-semibold text-cognac mb-8">The Sensory Signature</h2>
+            <h2 className="text-sm uppercase tracking-widest font-semibold text-cognac mb-8">{t.sanctuary.sensoryTag}</h2>
             <h3 className="text-4xl font-bold tracking-tighter uppercase mb-8 leading-tight">
-              Quiet Luxury Over<br />Hyper-Masculinity.
+              {t.sanctuary.sensoryTitle1}<br />{t.sanctuary.sensoryTitle2}
             </h3>
             <p className="text-xl text-obsidian/80 font-light leading-relaxed mb-12">
-              We reject the loud, chaotic environment of traditional barbershops. Morla is designed as a retreat—a place to decompress and recalibrate.
+              {t.sanctuary.sensoryDesc}
             </p>
             
             <div className="space-y-8">
               {[
                 {
                   icon: <Wind className="w-6 h-6 text-brass" />,
-                  title: 'Sandalwood',
-                  desc: 'A grounding, woody base that anchors the space in calm.',
+                  title: t.sanctuary.sensoryItems.sandalwood.title,
+                  desc: t.sanctuary.sensoryItems.sandalwood.desc,
                 },
                 {
                   icon: <Droplets className="w-6 h-6 text-brass" />,
-                  title: 'Bergamot',
-                  desc: 'A crisp, citrus top note that invigorates the senses upon entry.',
+                  title: t.sanctuary.sensoryItems.bergamot.title,
+                  desc: t.sanctuary.sensoryItems.bergamot.desc,
                 },
                 {
                   icon: <Flame className="w-6 h-6 text-brass" />,
-                  title: 'Black Pepper',
-                  desc: 'A subtle, spicy warmth that lingers in the hot towels.',
+                  title: t.sanctuary.sensoryItems.pepper.title,
+                  desc: t.sanctuary.sensoryItems.pepper.desc,
                 },
               ].map((item, idx) => (
                 <div key={idx} className="flex items-start gap-6">
@@ -99,19 +102,19 @@ export default function Sanctuary() {
       {/* The Patron & Artisan */}
       <section className="py-40 px-6 bg-obsidian text-canvas text-center">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-sm uppercase tracking-widest font-semibold text-brass mb-8">The Philosophy</h2>
+          <h2 className="text-sm uppercase tracking-widest font-semibold text-brass mb-8">{t.sanctuary.philosophyTag}</h2>
           <h3 className="text-4xl md:text-5xl font-bold tracking-tighter uppercase mb-12 leading-tight">
-            The Knowledgeable Artisan<br />
-            <span className="font-light italic">& The Discerning Patron.</span>
+            {t.sanctuary.philosophyTitle1}<br />
+            <span className="font-light italic">{t.sanctuary.philosophyTitle2}</span>
           </h3>
           <p className="text-xl text-canvas/70 font-light leading-relaxed mb-16">
-            A haircut is not a transaction; it is a collaboration. We provide the expertise, the tools, and the environment. You bring the vision. Together, we craft a look that is undeniably yours.
+            {t.sanctuary.philosophyDesc}
           </p>
           <Link
             to="/reserve"
             className="inline-flex items-center gap-2 px-10 py-5 bg-brass text-obsidian text-sm uppercase tracking-widest font-semibold hover:bg-canvas hover:text-obsidian transition-all duration-300"
           >
-            Experience Morla
+            {t.sanctuary.experienceBtn}
           </Link>
         </div>
       </section>
