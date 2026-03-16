@@ -5,11 +5,10 @@
   "name": "morla barbershop",
   "orientation": "any",
   "scope": "/",
-  "short_name": "Morla",
+  "short_name": "morla",
   "start_url": "/",
   "theme_color": "#0a0a0a",
-  "description": "A minimalist, high-end barbershop website for Morla, offering precision fading and beard architecture.",
-  "lang": "so",
+  "description": "\"A minimalist, high-end barbershop website for Morla, offering precision fading and beard architecture.\",
   "icons": [
     {
       "src": "https://i.postimg.cc/VkTtR5yn/icon-512.png",
