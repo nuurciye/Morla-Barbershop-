@@ -58,7 +58,7 @@ export default function Success() {
           className="inline-flex items-center gap-3 px-8 py-4 bg-obsidian text-canvas text-sm uppercase tracking-widest font-semibold hover:bg-cognac transition-all duration-300"
         >
           <ArrowLeft className="w-4 h-4" />
-          {t.success.returnHome}
+          {t.success.returnBtn}
         </Link>
       </div>
     </motion.div>
